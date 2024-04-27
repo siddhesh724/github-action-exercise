@@ -1,0 +1,24 @@
+name: deployment2
+on: [push,workflow_dispatch]
+jobs:
+    testing:
+        runs-on: ubuntu-latest
+        steps:
+            - name: get code
+              uses: actions/checkout@v3
+            - name: CI prepared
+              run: npm ci
+            - name: testing
+              run: npm run test
+    deploymet:
+        needs: testing
+        runs-on: ubuntu-latest
+        steps:
+            - name: get code
+              uses: actions/checkout@v3
+            - name: CI prepared
+              run: npm ci
+            - name: Build the code
+              run: npm run build
+            - name: deployment
+              run: echo "deployemt ${{ toJson(github) }}"
